@@ -1,0 +1,129 @@
+/* Grundläggande CSS-reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Stilar för body */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Hero-bild stil */
+.hero {
+    background-image: url('https://source.unsplash.com/1600x900/?city');
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Overlay över hero-bilden för bättre läsbarhet */
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+/* Titel över hero-bilden */
+.hero-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 3em;
+    text-align: center;
+}
+
+/* Huvudcontainer */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Lista över städer */
+.city-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.city-item {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Knappstilar */
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.btn-add {
+    background-color: #2ecc71;
+    color: #fff;
+    margin-top: 20px;
+}
+
+/* Formulärstilar */
+.add-city-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-city-form input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.add-city-form input[type="submit"] {
+    padding: 10px 15px;
+    border: none;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Responsiv design */
+@media (max-width: 600px) {
+    .hero-title {
+        font-size: 2em;
+    }
+
+    .add-city-form input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .add-city-form input[type="submit"] {
+        width: 100%;
+    }
+}
