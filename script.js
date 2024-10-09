@@ -57,92 +57,27 @@ async function fetchCities() {
         alert(`Kunde inte hämta städer: ${error.message}`);
     }
 }
-
-/**
- * Funktion för att lägga till en ny stad via API:et
- */
-async function addCity(name, population) {
-    try {
-        // Skapa ett nytt objekt för den stad som ska läggas till.
-        const newCity = {
-            name: name,
-            population: population
-        };
-
-        // Skicka en POST-förfrågan till API:et med stadens data.
-        const response = await fetch(apiUrl, {
-            method: 'POST', // Vi använder POST-metoden för att skapa en ny stad
-            headers: {
-                'Content-Type': 'application/json' // Vi säger att vi skickar JSON-data
-            },
-            body: JSON.stringify(newCity) // Konvertera objektet till JSON-format
-        });
-
-        // Om svaret inte är okej, kasta ett fel.
-        if (!response.ok) {
-            const errorMessage = await response.text(); // Läs felmeddelandet från servern
-            throw new Error(
-                `Något gick fel med att lägga till staden: ${response.status} ${response.statusText} - ${errorMessage}`
-            );
-        }
-
-        // Efter att staden har lagts till, hämta och visa de aktuella städerna.
-        fetchCities();
-        // Rensa formuläret så att användaren kan lägga till en ny stad.
-        addCityForm.reset();
-    } catch (error) {
-        // Logga felet och visa ett meddelande till användaren.
-        console.error('Error:', error);
-        alert(`Kunde inte lägga till staden: ${error.message}`);
-    }
-}
-
-/**
- * Funktion för att ta bort en stad via API:et
- */
+//funktion för att ta bort en stad
 async function deleteCity(id) {
-    // Fråga användaren om de är säkra på att de vill ta bort staden.
-    if (!confirm('Är du säker på att du vill ta bort denna stad?')) {
-        return; // Om användaren avbryter, gör ingenting
+    //Fråga användaren om de är säkra på att de vill ta bort staden
+    if (!confirm('Är du säker på att du vill ta bort staden')) {
+        return;
     }
-
     try {
-        // Skicka en DELETE-förfrågan till API:et med stadens ID.
         const response = await fetch(`${apiUrl}${id}`, {
-            method: 'DELETE' // Vi använder DELETE-metoden för att ta bort staden
+            method: 'DELETE'
         });
 
-        // Om svaret inte är okej, kasta ett fel.
         if (!response.ok) {
-            throw new Error(
-                `Något gick fel med att ta bort staden: ${response.status} ${response.statusText}`
-            );
+            throw new Error('Gick ej att ta bort staden');
         }
-        // Hämta och visa de aktuella städerna efter att en stad har tagits bort.
         fetchCities();
     } catch (error) {
-        // Logga felet och visa ett meddelande till användaren.
-        console.error('Error:', error);
-        alert(`Kunde inte ta bort staden: ${error.message}`);
+        console.error('Error', error);
+        alert('Kunde ej ta bort staden');
     }
 }
 
-/**
- * Händelsehanterare för formulärets inskickning
- */
-addCityForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Förhindra att sidan laddas om när formuläret skickas
-    const cityName = cityNameInput.value.trim(); // Hämta och trimma stadens namn
-    const cityPopulation = cityPopulationInput.value.trim(); // Hämta och trimma befolkningen
-
-    // Kontrollera att båda fälten är ifyllda
-    if (cityName !== '' && cityPopulation !== '') {
-        addCity(cityName, parseInt(cityPopulation)); // Lägg till staden om fälten inte är tomma
-    } else {
-        alert('Vänligen fyll i alla fält.'); // Visa meddelande om fälten är tomma
-    }
-});
-
-// När sidan laddas, hämta och visa städer
-// Denna kod kommer att köras när hela dokumentet har laddats.
+//När sidan laddas så vill jag hämta och visa städer
+//Nedan kod kommer att köras när hela dokumentet har laddats
 window.addEventListener('DOMContentLoaded', fetchCities);
